@@ -1,0 +1,13 @@
+{
+    "name": "media101/admin",
+    "description": "admin package",
+    "authors": [
+        {
+            "name": "ve",
+            "email": "ve@101media.ru"
+        }
+    ],
+    "require": {
+        "lavary/laravel-menu": "dev-master"
+    }
+}
