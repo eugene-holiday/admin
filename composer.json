@@ -9,5 +9,10 @@
     ],
     "require": {
         "lavary/laravel-menu": "@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "OneHundredAndOneMedia\\": "src/OneHundredAndOneMedia/"
+        }
     }
 }
