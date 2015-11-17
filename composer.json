@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "lavary/laravel-menu": ">=1.5.1"
+        "lavary/laravel-menu": "1.5.x-dev"
     },
     "autoload": {
         "psr-4": {
