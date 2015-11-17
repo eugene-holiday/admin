@@ -8,6 +8,6 @@
         }
     ],
     "require": {
-        "lavary/laravel-menu": "dev-master"
+        "lavary/laravel-menu": "@dev"
     }
 }
