@@ -70,7 +70,7 @@ class BootstrapServiceprovider extends ServiceProvider{
 //        config([
 //            'config/contact.php',
 //        ]);
-        $this->app->register('Lavary\Menu\ServiceProvider');
+        //$this->app->register('Lavary\Menu\ServiceProvider');
     }
 
     private function registerContact()
@@ -85,6 +85,6 @@ class BootstrapServiceprovider extends ServiceProvider{
     protected function registerMiddleware()
     {
         Route::middleware('admin.auth', 'OneHundredAndOneMedia\Admin\Http\Middleware\Authenticate');
-        Route::middleware('admin.menu', 'OneHundredAndOneMedia\Admin\Http\Middleware\MenuMiddleware');
+        //Route::middleware('admin.menu', 'OneHundredAndOneMedia\Admin\Http\Middleware\MenuMiddleware');
     }
 }
