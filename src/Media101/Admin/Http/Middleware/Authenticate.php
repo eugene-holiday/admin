@@ -1,6 +1,6 @@
 <?php
 
-namespace OneHundredAndOneMedia\Admin\Http\Middleware;
+namespace Media101\Admin\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;

@@ -1,6 +1,6 @@
 <?php
 
-namespace OneHundredAndOneMedia\Admin\Http\Middleware;
+namespace Media101\Admin\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -20,6 +20,9 @@ class MenuMiddleware
 
         \Menu::make('Sidebar', function($menu){
             $menu->group(array('prefix' => config('admin.prefix')), function($m){
+
+                require_once app_path() . '/Admin/menu.php';
+
                 $m->raw('<span>Настройки</span>', ['class' => 'header']);
                 $m->add('<span>Пользователи</span>', 'users')->prepend('<i class="fa fa-link"></i>');
                 $m->add('<span>Роли</span>', 'roles')->prepend('<i class="fa fa-users"></i>');

@@ -15,11 +15,11 @@ Route::group([
 ], function (){
 
     Route::get('/', 'AdminController@index');
-    Route::get('/users', 'AdminController@display');
 
-    Route::get('users/{user}',function($user, \Illuminate\Foundation\Http\Kernel $kernel){
-        dd($user);
-    });
+    Route::get('/users', 'UsersController@index');
+
+    Route::get('users/create', ['as'   => 'user.create', 'uses' => 'UsersController@create']);
+    Route::get('users/{id}/edit', ['as'   => 'user.edit', 'uses' => 'UsersController@edit']);
 
     Route::get('/logout',  [
         'as'   => 'admin.logout',

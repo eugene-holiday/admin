@@ -1,4 +1,4 @@
-<?php namespace	OneHundredAndOneMedia\Admin\Providers;
+<?php namespace	Media101\Admin\Providers;
 
 /**
  *
@@ -24,7 +24,7 @@ class BootstrapServiceprovider extends ServiceProvider{
     public function boot(Kernel $kernel)
     {
 
-        $kernel->pushMiddleware('OneHundredAndOneMedia\Admin\Http\Middleware\MenuMiddleware');
+        $kernel->pushMiddleware('Media101\Admin\Http\Middleware\MenuMiddleware');
 
         $this->loadViewsFrom( __DIR__. '/../../../views', 'admin');
 
@@ -36,10 +36,10 @@ class BootstrapServiceprovider extends ServiceProvider{
         ]);
 
         $this->publishes([
-            dirname(__FILE__) . '/../../../../public/' => public_path('packages/one-hundred-and-one-media/admin/'),
+            dirname(__FILE__) . '/../../../../public/' => public_path('packages/media101/admin/'),
         ], 'assets');
 
-        AliasLoader::getInstance()->alias('Menu', 'Lavary\Menu\Facade');
+//        AliasLoader::getInstance()->alias('Menu', 'Lavary\Menu\Facade');
 
 
     }
@@ -53,7 +53,7 @@ class BootstrapServiceprovider extends ServiceProvider{
     public function setupRoutes(Router $router)
     {
         $router->group([
-            'namespace' => 'OneHundredAndOneMedia\Admin\Http\Controllers',
+            'namespace' => 'Media101\Admin\Http\Controllers',
             'prefix' => config('admin.prefix')
         ], function()
         {
@@ -84,7 +84,7 @@ class BootstrapServiceprovider extends ServiceProvider{
 
     protected function registerMiddleware()
     {
-        Route::middleware('admin.auth', 'OneHundredAndOneMedia\Admin\Http\Middleware\Authenticate');
-        //Route::middleware('admin.menu', 'OneHundredAndOneMedia\Admin\Http\Middleware\MenuMiddleware');
+        Route::middleware('admin.auth', 'Media101\Admin\Http\Middleware\Authenticate');
+        Route::middleware('admin.menu', 'Media101\Admin\Http\Middleware\MenuMiddleware');
     }
 }

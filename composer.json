@@ -11,7 +11,7 @@
     },
     "autoload": {
         "psr-4": {
-            "OneHundredAndOneMedia\\": "src/OneHundredAndOneMedia/"
+            "Media101\\": "src/Media101/"
         }
     }
 }

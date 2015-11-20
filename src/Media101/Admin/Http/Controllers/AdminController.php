@@ -1,4 +1,4 @@
-<?php namespace OneHundredAndOneMedia\Admin\Http\Controllers;
+<?php namespace Media101\Admin\Http\Controllers;
 
 use App;
 use Illuminate\Http\Response;
