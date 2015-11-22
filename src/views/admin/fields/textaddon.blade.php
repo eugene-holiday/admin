@@ -9,5 +9,5 @@
 			<span class="input-group-addon">{!! $addon !!}</span>
 		@endif
 	</div>
-	@include('admin::admin.fields.errors'))
+	@include('admin::admin.fields.errors')
 </div>

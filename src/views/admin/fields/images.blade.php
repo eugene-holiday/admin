@@ -16,7 +16,7 @@
 		</div>
 		<input name="{{ $name }}" class="imageValue" type="hidden" value="{{ implode(',', $value) }}">
 		<div class="errors">
-			@include('admin::admin.fields.errors'))
+			@include('admin::admin.fields.errors')
 		</div>
 	</div>
 </div>

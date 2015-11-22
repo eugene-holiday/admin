@@ -1,15 +1,13 @@
-<?php namespace	Media101\Admin\Providers;
-
-/**
- *
- * @author kora jai <kora.jayaram@gmail>
- */
+<?php namespace Media101\Admin\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
 use Route;
 use Illuminate\Foundation\Http\Kernel;
+use Media101\Admin\Admin;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class BootstrapServiceprovider extends ServiceProvider{
 
@@ -23,6 +21,11 @@ class BootstrapServiceprovider extends ServiceProvider{
 
     public function boot(Kernel $kernel)
     {
+
+        app()->bind('Admin', function()
+        {
+            return new Admin();
+        });
 
         $kernel->pushMiddleware('Media101\Admin\Http\Middleware\MenuMiddleware');
 
@@ -52,6 +55,19 @@ class BootstrapServiceprovider extends ServiceProvider{
      */
     public function setupRoutes(Router $router)
     {
+        require app_path() . '/Admin/entities.php';
+        $router->pattern('entity', implode('|', Admin::entitiesAliases()));
+        $router->bind('entity', function ($entity)
+        {
+            $class = array_search($entity, Admin::entitiesAliases());
+            if ($class === false)
+            {
+                throw new ModelNotFoundException;
+            }
+            return Admin::entity($class);
+        });
+
+
         $router->group([
             'namespace' => 'Media101\Admin\Http\Controllers',
             'prefix' => config('admin.prefix')

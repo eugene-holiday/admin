@@ -16,10 +16,11 @@ Route::group([
 
     Route::get('/', 'AdminController@index');
 
-    Route::get('/users', 'UsersController@index');
-
-    Route::get('users/create', ['as'   => 'user.create', 'uses' => 'UsersController@create']);
-    Route::get('users/{id}/edit', ['as'   => 'user.edit', 'uses' => 'UsersController@edit']);
+    Route::resource('users', 'UsersController',  ['only' => ['index', 'update', 'edit', 'create']]);
+    Route::get('/{entity}', 'EntityController@index');
+    Route::get('/{entity}/{id}', 'EntityController@show');
+    Route::get('/{entity}/{id}/edit', 'EntityController@edit');
+    Route::put('/{entity}/{id}/update', 'EntityController@update');
 
     Route::get('/logout',  [
         'as'   => 'admin.logout',

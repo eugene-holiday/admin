@@ -9,5 +9,5 @@
 			</label>
 		</div>
 	@endforeach
-	@include('admin::admin.fields.errors'))
+	@include('admin::admin.fields.errors')
 </div>

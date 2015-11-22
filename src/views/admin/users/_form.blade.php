@@ -5,19 +5,12 @@
         <h3 class="box-title">Quick Example</h3>
     </div><!-- /.box-header -->
     <!-- form start -->
-    <form role="form" action="{{ route('admin.users.update') }}">
+    <form role="form" action="{{ route('admin.users.update', $user) }}" method="POST">
+        <input name="_method" type="hidden" value="PUT">
+        <input name="_token" type="hidden" value="{{ csrf_token() }}">
         <div class="box-body">
+            @include('admin::admin.fields.text', ['name' => 'email', 'label' => 'Email address', 'value' => $user->email ])
 
-            @include('admin::admin.fields.text', ['name' => 'email', 'label' => 'Email address', 'value' => $user->email])
-
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" value="{{ $user->email }}">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" {{ $user->password }}>
-            </div>
             <div class="form-group">
                 <label for="exampleInputFile">File input</label>
                 <input type="file" id="exampleInputFile">
