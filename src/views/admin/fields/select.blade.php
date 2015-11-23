@@ -11,5 +11,4 @@
 			@endforeach
 		</select>
 	</div>
-	@include('admin::admin.fields.errors')
 </div>

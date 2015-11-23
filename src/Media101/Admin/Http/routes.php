@@ -14,13 +14,17 @@ Route::group([
     'middleware' => config('admin.middleware'),
 ], function (){
 
-    Route::get('/', 'AdminController@index');
+    Route::get('/', ['as'   => 'admin.home',  'uses' => 'AdminController@index']);
 
     Route::resource('users', 'UsersController',  ['only' => ['index', 'update', 'edit', 'create']]);
-    Route::get('/{entity}', 'EntityController@index');
-    Route::get('/{entity}/{id}', 'EntityController@show');
-    Route::get('/{entity}/{id}/edit', 'EntityController@edit');
-    Route::put('/{entity}/{id}/update', 'EntityController@update');
+
+    Route::get('/{entity}',                      ['as'   => 'admin.entity.index',  'uses' => 'EntityController@index']);
+    Route::get('/{entity}/create',               ['as'   => 'admin.entity.create', 'uses' => 'EntityController@create']);
+    Route::post('/{entity}/store',               ['as'   => 'admin.entity.store',  'uses' => 'EntityController@store']);
+    Route::get('/{entity}/{modelId}',            ['as'   => 'admin.entity.show',   'uses' =>  'EntityController@show']);
+    Route::get('/{entity}/{modelId}/edit',       ['as'   => 'admin.entity.edit',   'uses' =>  'EntityController@edit']);
+    Route::put('/{entity}/{modelId}/update',     ['as'   => 'admin.entity.update', 'uses' => 'EntityController@update']);
+    Route::delete('/{entity}/{modelId}/destroy', ['as'   => 'admin.entity.destroy', 'uses' => 'EntityController@destroy']);
 
     Route::get('/logout',  [
         'as'   => 'admin.logout',

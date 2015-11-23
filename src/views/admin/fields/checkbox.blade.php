@@ -6,5 +6,4 @@
 		</label>
 		<p><small style="color: grey;"> {{ $description }}</small></p>
 	</div>
-	@include('admin::admin.fields.errors')
 </div>

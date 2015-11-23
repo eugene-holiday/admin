@@ -3,12 +3,12 @@
 namespace Media101\Admin\Http\Controllers;
 
 
-use App\Domain\Post;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Media101\Admin\Entity;
+use Illuminate\Support\Facades\Validator;
+
 
 class EntityController extends Controller
 {
@@ -20,7 +20,8 @@ class EntityController extends Controller
     public function index($entity)
     {
         $entities = $entity::all();
-        return view('admin::admin.entities.index', compact('entities'));
+        $entityModel = $entity;
+        return view('admin::admin.entities.index', compact('entities', 'entityModel'));
     }
 
     /**
@@ -28,9 +29,10 @@ class EntityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($entity)
     {
-        //
+
+        return view('admin::admin.entities.create', compact('entity'));
     }
 
     /**
@@ -39,9 +41,17 @@ class EntityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($entity, Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), $entity->validationRules);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $item = new $entity($request->except(['_method', '_token']));
+        $item->save();
+        return redirect()->route('admin.entity.index', $entity->getAlias());
     }
 
     /**
@@ -52,7 +62,6 @@ class EntityController extends Controller
      */
     public function show($entity, $id)
     {
-        dd($entity);
         $entity = $entity::find($id);
         return view('admin::admin.entities.show', compact('entity'));
     }
@@ -76,12 +85,17 @@ class EntityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Entity $entity, Request $request, $id)
+    public function update($entity, Request $request, $id)
     {
-        $modelClass = $entity->model();
-        $model = $modelClass::find($id);
+        $validator = Validator::make($request->all(), $entity->validationRules);
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $model = $entity::find($id);
         $model->update($request->all());
-        //return redirect()->to('admin::admin.entities.index');
+        return redirect()->route('admin.entity.index', [$entity->getAlias()]);
     }
 
     /**
@@ -90,8 +104,10 @@ class EntityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($entity, $id)
     {
-        //
+        $model = $entity::find($id);
+        $model->delete();
+        return redirect()->route('admin.entity.index', [$entity->getAlias()]);
     }
 }

@@ -50,8 +50,8 @@
 
 @section('scripts')
     <!-- DataTables -->
-    <script src="{{ asset('/packages/one-hundred-and-one-media/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('/packages/one-hundred-and-one-media/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('/packages/media101/admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/packages/media101/admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
     <script>
         $(function () {
             $("#example1").DataTable();

@@ -32,5 +32,4 @@
 			</div>
 		</div>
 	</div>
-	@include(AdminTemplate::view('formitem.errors')
 </div>

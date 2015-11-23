@@ -32,21 +32,18 @@ class BootstrapServiceprovider extends ServiceProvider{
         $this->loadViewsFrom( __DIR__. '/../../../views', 'admin');
 
         $this->setupRoutes($this->app->router);
-//
+
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
             __DIR__.'/../../../views/' => base_path('resources/views/admin/'),
             __DIR__.'/../../../config/menu.php' => base_path('App/Admin/'),
             __DIR__.'/../../../config/entities.php/' => base_path('App/Admin/'),
+            __DIR__.'/../../../config/User.php/' => base_path('App/Admin/'),
         ]);
 
         $this->publishes([
             dirname(__FILE__) . '/../../../../public/' => public_path('packages/media101/admin/'),
         ], 'assets');
-
-//        AliasLoader::getInstance()->alias('Menu', 'Lavary\Menu\Facade');
-
-
     }
 
     /**
@@ -59,6 +56,7 @@ class BootstrapServiceprovider extends ServiceProvider{
     {
         require app_path() . '\Admin\entities.php';
         if(Admin::$entities) {
+            $router->pattern('modelId', '[0-9]+');
             $router->pattern('entity', implode('|', Admin::entitiesAliases()));
             $router->bind('entity', function ($entity) {
                 $class = array_search($entity, Admin::entitiesAliases());
@@ -69,6 +67,19 @@ class BootstrapServiceprovider extends ServiceProvider{
             });
         }
 
+        $router->group([
+            'prefix' => config('admin.prefix')
+        ], function() use ($router)
+        {
+            $router->group([
+                'middleware' => config('admin.middleware'),
+            ], function () {
+                if (file_exists(base_path('App/Admin/') . 'routes.php')) {
+                    require base_path('App/Admin/') . 'routes.php';
+                }
+            });
+
+        });
 
         $router->group([
             'namespace' => 'Media101\Admin\Http\Controllers',
@@ -79,26 +90,10 @@ class BootstrapServiceprovider extends ServiceProvider{
         });
     }
 
-
     public function register()
     {
-
         $this->registerMiddleware();
-//        $this->registerContact();
-//        config([
-//            'config/contact.php',
-//        ]);
-        //$this->app->register('Lavary\Menu\ServiceProvider');
     }
-
-    private function registerContact()
-    {
-//        $this->app->bind('contact',function($app){
-//            return new Contact($app);
-//        });
-    }
-
-
 
     protected function registerMiddleware()
     {
