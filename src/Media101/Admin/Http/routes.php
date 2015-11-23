@@ -27,7 +27,6 @@ Route::group([
         'uses' => 'AdminController@logout',
     ]);
 
-
     Route::get('/{wildcard}', [
         'as' => 'admin.wildcard',
         'uses' => 'AdminController@wildcard'

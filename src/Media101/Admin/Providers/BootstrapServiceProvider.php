@@ -36,6 +36,8 @@ class BootstrapServiceprovider extends ServiceProvider{
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
             __DIR__.'/../../../views/' => base_path('resources/views/admin/'),
+            __DIR__.'/../../../config/menu.php' => base_path('App/Admin/'),
+            __DIR__.'/../../../config/entities.php/' => base_path('App/Admin/'),
         ]);
 
         $this->publishes([
@@ -55,17 +57,17 @@ class BootstrapServiceprovider extends ServiceProvider{
      */
     public function setupRoutes(Router $router)
     {
-        require app_path() . '/Admin/entities.php';
-        $router->pattern('entity', implode('|', Admin::entitiesAliases()));
-        $router->bind('entity', function ($entity)
-        {
-            $class = array_search($entity, Admin::entitiesAliases());
-            if ($class === false)
-            {
-                throw new ModelNotFoundException;
-            }
-            return Admin::entity($class);
-        });
+        require app_path() . '\Admin\entities.php';
+        if(Admin::$entities) {
+            $router->pattern('entity', implode('|', Admin::entitiesAliases()));
+            $router->bind('entity', function ($entity) {
+                $class = array_search($entity, Admin::entitiesAliases());
+                if ($class === false) {
+                    throw new ModelNotFoundException;
+                }
+                return Admin::entity($class);
+            });
+        }
 
 
         $router->group([

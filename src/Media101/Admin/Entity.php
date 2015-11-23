@@ -4,27 +4,27 @@ namespace	Media101\Admin;
 
 use Illuminate\Support\Str;
 
-class Entity
+trait Entity
 {
     protected $alias;
 
-    protected $model;
+    //protected $model;
 
     /**
      * @return mixed
      */
-    public function model()
-    {
-        return $this->model;
-    }
-    /**
-     * Entity constructor.
-     * @param $alias
-     */
-    public function __construct()
-    {
-        $this->setDefaultAlias();
-    }
+//    public function model()
+//    {
+//        return $this->model;
+//    }
+//    /**
+//     * Entity constructor.
+//     * @param $alias
+//     */
+//    public function __construct()
+//    {
+//        $this->setDefaultAlias();
+//    }
 
     /**
      * @return mixed
@@ -34,13 +34,13 @@ class Entity
         return $this->alias;
     }
 
-    protected function setDefaultAlias()
+    public function setDefaultAlias()
     {
-        $alias = Str::snake(Str::plural(class_basename($this->model)));
+        $alias = Str::snake(Str::plural(class_basename($this)));
         $this->alias = $alias;
     }
 
-    public function formFields($model){}
+    public function formFields(){}
 
 
 }

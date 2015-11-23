@@ -23,12 +23,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                                @foreach($users as $user)
+                                @foreach($entities as $entity)
                                     <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->created_at }}</td>
-                                        <td><a class="btn btn-primary btn-sm" href=" {{ route('admin.users.edit', $user) }}" title="Редактировать"><i class="fa fa-pencil"></i></a></td>
+                                        <td>{{ $entity->id }}</td>
+                                        <td>{{ $entity->title }}</td>
+                                        <td>{{ $entity->created_at }}</td>
+                                        <td><a class="btn btn-primary btn-sm" href=" " title="Редактировать"><i class="fa fa-pencil"></i></a></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -55,14 +55,6 @@
     <script>
         $(function () {
             $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
         });
     </script>
 @endsection

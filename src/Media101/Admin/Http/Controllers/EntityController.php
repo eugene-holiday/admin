@@ -19,8 +19,8 @@ class EntityController extends Controller
      */
     public function index($entity)
     {
-        $model = $entity->model();
-        dd($model::all());
+        $entities = $entity::all();
+        return view('admin::admin.entities.index', compact('entities'));
     }
 
     /**
@@ -50,10 +50,10 @@ class EntityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Entity $entity, $id)
+    public function show($entity, $id)
     {
-        $model = $entity->model();
-        $entity = $model::find($id);
+        dd($entity);
+        $entity = $entity::find($id);
         return view('admin::admin.entities.show', compact('entity'));
     }
 
@@ -63,11 +63,10 @@ class EntityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entity $entity, $id)
+    public function edit($entity, $id)
     {
-        $modelClass = $entity->model();
-        $model = $modelClass::find($id);
-        return view('admin::admin.entities.edit', compact('entity', 'model'));
+        $entity = $entity::find($id);
+        return view('admin::admin.entities.edit', compact('entity'));
     }
 
     /**

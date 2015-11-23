@@ -6,6 +6,6 @@
 
 @section('main-content')
 
-    @include('admin::admin.entities._form', ['entity' => $entity, 'model' => $model])
+    @include('admin::admin.entities._form', ['entity' => $entity])
 
 @endsection

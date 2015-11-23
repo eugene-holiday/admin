@@ -10,9 +10,10 @@ class Admin
     {
         if( is_string($entity)){
             $entity = new $entity();
-
-            if($entity instanceof Entity)
+            if($entity instanceof EntityInterface) {
+                $entity->setDefaultAlias();
                 self::$entities[$entity->getAlias()] = $entity;
+            }
         }
     }
 

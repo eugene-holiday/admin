@@ -9,9 +9,12 @@
         <input name="_method" type="hidden" value="PUT">
         <input name="_token" type="hidden" value="{{ csrf_token() }}">
         <div class="box-body">
-            @foreach($entity->formFields($model) as $field)
-                @include('admin::admin.fields.'. $field['type'], $field)
-            @endforeach
+            @if($entity->formFields())
+                @foreach($entity->formFields() as $field)
+                    @include('admin::admin.fields.'. $field['type'], $field)
+                @endforeach
+            @endif
+        </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
