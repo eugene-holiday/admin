@@ -27,7 +27,25 @@ class BootstrapServiceprovider extends ServiceProvider{
             return new Admin();
         });
 
-        $kernel->pushMiddleware('Media101\Admin\Http\Middleware\MenuMiddleware');
+        //$kernel->pushMiddleware('Media101\Admin\Http\Middleware\MenuMiddleware');  не хотим меню на каждый реквест
+
+        //хотим только когда сайдбар рендерится
+        $this->app['view']->composer('admin::admin.partials.sidebar',function($view){
+            \Menu::make('Sidebar', function($menu){
+                $menu->group(array('prefix' => config('admin.prefix')), function($m){
+                    if (file_exists(app_path('Admin/menu.php'))) {
+                        require app_path() . '/Admin/menu.php';
+                    }
+                    $m->raw('<span>Настройки</span>', ['class' => 'header']);
+                    $m->add('<span>Пользователи</span>', 'users')->prepend('<i class="fa fa-link"></i>');
+//                $m->add('<span>Роли</span>', 'roles')->prepend('<i class="fa fa-users"></i>');
+//                $m->add('<span>Документооборот</span>',  'workflow')->prepend('<i class="fa fa-random"></i>');
+//                $m->add('<span>Права доступа</span>',  'access')->prepend('<i class="fa fa-wrench"></i>');
+//                $m->add('<span>Настройки</span>',  'settings')->prepend('<i class="fa fa-gears"></i>');
+//                $m->add('<span>Внешний вид</span>',  'themes')->prepend('<i class="fa fa-flag"></i>');
+                });
+            });
+        });
 
         $this->loadViewsFrom( __DIR__. '/../../../views', 'admin');
 
@@ -54,7 +72,7 @@ class BootstrapServiceprovider extends ServiceProvider{
      */
     public function setupRoutes(Router $router)
     {
-        if (file_exists(app_path('App/Admin/entities.php'))) {
+        if (file_exists(app_path() . '\Admin\entities.php')) {
             require app_path() . '\Admin\entities.php';
         }
         if(Admin::$entities) {
