@@ -20,8 +20,10 @@ class MenuMiddleware
 
         \Menu::make('Sidebar', function($menu){
             $menu->group(array('prefix' => config('admin.prefix')), function($m){
+                if (file_exists(app_path('Admin/menu.php'))) {
+                    require app_path() . '/Admin/menu.php';
+                }
 
-                require_once app_path() . '/Admin/menu.php';
 
                 $m->raw('<span>Настройки</span>', ['class' => 'header']);
                 $m->add('<span>Пользователи</span>', 'users')->prepend('<i class="fa fa-link"></i>');

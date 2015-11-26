@@ -31,19 +31,19 @@ class BootstrapServiceprovider extends ServiceProvider{
 
         $this->loadViewsFrom( __DIR__. '/../../../views', 'admin');
 
-        $this->setupRoutes($this->app->router);
-
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
-            __DIR__.'/../../../views/' => base_path('resources/views/admin/'),
-            __DIR__.'/../../../config/menu.php' => base_path('App/Admin/'),
-            __DIR__.'/../../../config/entities.php/' => base_path('App/Admin/'),
-            __DIR__.'/../../../config/User.php/' => base_path('App/Admin/'),
+           // __DIR__.'/../../../views/' => base_path('resources/views/admin/'),
+            __DIR__.'/../../../config/menu.php' => app_path('Admin/menu.php'),
+            __DIR__.'/../../../config/entities.php' => app_path('Admin/entities.php'),
+            __DIR__.'/../../../config/User.php' => app_path('Admin/User.php'),
         ]);
 
         $this->publishes([
             dirname(__FILE__) . '/../../../../public/' => public_path('packages/media101/admin/'),
         ], 'assets');
+
+        $this->setupRoutes($this->app->router);
     }
 
     /**
@@ -54,7 +54,9 @@ class BootstrapServiceprovider extends ServiceProvider{
      */
     public function setupRoutes(Router $router)
     {
-        require app_path() . '\Admin\entities.php';
+        if (file_exists(app_path('App/Admin/entities.php'))) {
+            require app_path() . '\Admin\entities.php';
+        }
         if(Admin::$entities) {
             $router->pattern('modelId', '[0-9]+');
             $router->pattern('entity', implode('|', Admin::entitiesAliases()));
