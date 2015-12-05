@@ -44,7 +44,7 @@ config/app.php
 	...
         
         Lavary\Menu\ServiceProvider::class,
-        Media101\Admin\Providers\BootstrapServiceprovider::class,
+        Media101\Admin\Providers\BootstrapServiceProvider::class,
        
         
         ...
